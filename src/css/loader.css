@@ -1,5 +1,4 @@
 .loader {
-  display: none;
   position: absolute;
   transform: translate(-50%, -50%);
   top: 50%;
@@ -14,9 +13,34 @@
   background: linear-gradient(-60deg, #0000 45%, #000 0 55%, #0000 0) 0/300%
     100% no-repeat text;
   animation: l3 2s linear infinite;
+  transition: all 200ms ease-in-out;
+  &:before {
+    content: 'Loading images, please wait...';
+  }
 }
-.loader:before {
-  content: 'Loading images, please wait...';
+@keyframes l3 {
+  0% {
+    background-position: 100%;
+  }
+}
+
+.loader-for-more-images {
+  display: block;
+  margin: 0 auto;
+  width: fit-content;
+  font-size: 16px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #0000;
+  -webkit-text-stroke: 1px #000;
+  background: linear-gradient(-60deg, #0000 45%, #000 0 55%, #0000 0) 0/300%
+    100% no-repeat text;
+  animation: l3 2s linear infinite;
+  transition: all 200ms ease-in-out;
+  &:before {
+    content: 'Loading images, please wait...';
+  }
 }
 @keyframes l3 {
   0% {

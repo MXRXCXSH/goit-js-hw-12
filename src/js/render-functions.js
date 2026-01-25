@@ -6,6 +6,10 @@ gallery.classList.add('container');
 
 const loader = document.querySelector('.loader');
 
+export const loadMoreBtn = document.querySelector('.load-more-btn');
+
+const loaderForMoreImages = document.querySelector('.loader-for-more-images');
+
 const lightbox = new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
   captionDelay: 250,
@@ -46,9 +50,24 @@ export const clearGallery = () => {
 };
 
 export const showLoader = () => {
-  loader.style.display = 'block';
+  loader.classList.remove('hidden');
 };
 
 export const hideLoader = () => {
-  loader.style.display = 'none';
+  loader.classList.add('hidden');
+};
+
+export const showLoadMoreBtn = () => {
+  loadMoreBtn.classList.remove('hidden');
+};
+export const hideLoadMoreBtn = () => {
+  loadMoreBtn.classList.add('hidden');
+};
+
+export const showLoaderForMoreImages = () => {
+  loaderForMoreImages.classList.remove('hidden');
+};
+
+export const hideLoaderForMoreImages = () => {
+  loaderForMoreImages.classList.add('hidden');
 };
