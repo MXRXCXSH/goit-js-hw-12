@@ -9,7 +9,7 @@ const lightbox = new SimpleLightbox('.gallery a', {
   captionDelay: 250,
 });
 
-export function createGallery(images) {
+export const createGallery = images => {
   const markup = images
     .map(
       ({
@@ -37,16 +37,16 @@ export function createGallery(images) {
     .join('');
   gallery.insertAdjacentHTML('beforeend', markup);
   lightbox.refresh();
-}
+};
 
-export function clearGallery() {
+export const clearGallery = () => {
   gallery.innerHTML = '';
-}
+};
 
-export function showLoader() {
+export const showLoader = () => {
   loader.style.display = 'block';
-}
+};
 
-export function hideLoader() {
+export const hideLoader = () => {
   loader.style.display = 'none';
-}
+};
