@@ -93,7 +93,6 @@ const handleLoadMore = async () => {
     const totalPages = Math.ceil(data.totalHits / 15);
 
     createGallery(data.hits);
-    page += 1;
 
     if (page < totalPages) {
       showLoadMoreBtn();
@@ -104,6 +103,7 @@ const handleLoadMore = async () => {
         position: 'topRight',
       });
     }
+    page += 1;
   } catch (error) {
     showError(MESSAGES.requestError);
   } finally {
