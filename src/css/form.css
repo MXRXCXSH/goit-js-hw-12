@@ -72,3 +72,11 @@
     background: #6c8cff;
   }
 }
+.load-more-wrapper {
+  display: grid;
+  place-items: center;
+  margin-bottom: 44px;
+  & > * {
+    grid-area: 1 / 1;
+  }
+}

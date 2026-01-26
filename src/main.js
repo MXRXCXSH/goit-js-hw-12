@@ -15,6 +15,7 @@ import {
   hideLoadMoreBtn,
   showLoaderForMoreImages,
   hideLoaderForMoreImages,
+  gallery,
 } from './js/render-functions';
 
 const showError = message => {
@@ -39,6 +40,8 @@ form.classList.add('container');
 
 let currentQuery = '';
 let page = 1;
+let totalPages = 0;
+let domCardRect = null;
 
 const handleSearch = async event => {
   event.preventDefault();
@@ -59,7 +62,7 @@ const handleSearch = async event => {
 
   try {
     const data = await getImagesByQuery(currentQuery, page);
-    const totalPages = Math.ceil(data.totalHits / 15);
+    totalPages = Math.ceil(data.totalHits / 15);
     console.log(data.hits);
     console.log(data.totalHits);
 
@@ -69,12 +72,15 @@ const handleSearch = async event => {
     }
 
     createGallery(data.hits);
+    domCardRect = gallery.firstElementChild.getBoundingClientRect();
+    console.log('🚀 ~ handleSearch ~ domCardRect:', domCardRect.height);
 
     if (page < totalPages) {
       showLoadMoreBtn();
     } else {
       hideLoadMoreBtn();
     }
+
     page += 1;
   } catch (error) {
     showError(MESSAGES.requestError);
@@ -86,15 +92,25 @@ const handleSearch = async event => {
 };
 
 const handleLoadMore = async () => {
+  if (!domCardRect) return;
+  console.log('🚀 ~ handleLoadMore ~ domCardRect:', domCardRect.height);
   showLoaderForMoreImages();
+  hideLoadMoreBtn();
 
   try {
     const data = await getImagesByQuery(currentQuery, page);
-    const totalPages = Math.ceil(data.totalHits / 15);
 
     createGallery(data.hits);
+    const rowGap = parseFloat(getComputedStyle(gallery).rowGap);
+    console.log('🚀 ~ handleLoadMore ~ rowGap:', rowGap);
+    const step = domCardRect.height + rowGap;
+    window.scrollBy({
+      top: step * 2,
+      behavior: 'smooth',
+    });
 
     if (page < totalPages) {
+      hideLoaderForMoreImages();
       showLoadMoreBtn();
     } else {
       hideLoadMoreBtn();
@@ -103,6 +119,7 @@ const handleLoadMore = async () => {
         position: 'topRight',
       });
     }
+
     page += 1;
   } catch (error) {
     showError(MESSAGES.requestError);
@@ -111,5 +128,5 @@ const handleLoadMore = async () => {
   }
 };
 
-loadMoreBtn.addEventListener('click', handleLoadMore);
 form.addEventListener('submit', handleSearch);
+loadMoreBtn.addEventListener('click', handleLoadMore);
